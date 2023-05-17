@@ -44,16 +44,18 @@ namespace Screencap
         private enum apps
         {
             Newworld,
-            NWGE
+            NWBE
         }
 
         private const int SW_RESTORE = 9;
 
+        private Bitmap equipmentOverview;
         public NWBE()
         {
             InitializeEquipmentslots();
             InitializeWeapons();
             InitializeComponent();
+            InitializeOutputPictures();
             SwitchApp(apps.Newworld);
         }
         
@@ -74,6 +76,11 @@ namespace Screencap
                     createGearsetOverview(hwnd);
                 }
             }
+        }
+        private void InitializeOutputPictures()
+        {
+            equipmentOverview = new Bitmap(2750, 1700);
+            
         }
         private void createGearsetOverview(IntPtr hwnd, int delay = 700)
         {
@@ -137,6 +144,13 @@ namespace Screencap
             image.Save(filename, format);
         }
 
+        public void AddItemToPicture()
+        {
+            Graphics g = Graphics.FromImage((Image)gbkn);
+            Image img = Image.FromFile("C:\\background.png");
+            g.DrawImage(img, new Point(0, 0));
+            img.Dipose();
+        }
         
     }
 }
