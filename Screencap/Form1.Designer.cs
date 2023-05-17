@@ -29,165 +29,170 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NWBE));
-            this.weapon1Combobox = new System.Windows.Forms.ComboBox();
-            this.startButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.CloseButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.weapon2Combobox = new System.Windows.Forms.ComboBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.ouputFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.SuspendLayout();
+            weapon1Combobox = new ComboBox();
+            startButton = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            CloseButton = new Button();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            weapon2Combobox = new ComboBox();
+            linkLabel1 = new LinkLabel();
+            ouputFolderBrowser = new FolderBrowserDialog();
+            SuspendLayout();
             // 
             // weapon1Combobox
             // 
-            this.weapon1Combobox.FormattingEnabled = true;
-            this.weapon1Combobox.Location = new System.Drawing.Point(30, 375);
-            this.weapon1Combobox.Name = "weapon1Combobox";
-            this.weapon1Combobox.Size = new System.Drawing.Size(121, 23);
-            this.weapon1Combobox.TabIndex = 0;
+            weapon1Combobox.FormattingEnabled = true;
+            weapon1Combobox.Location = new Point(34, 500);
+            weapon1Combobox.Margin = new Padding(3, 4, 3, 4);
+            weapon1Combobox.Name = "weapon1Combobox";
+            weapon1Combobox.Size = new Size(138, 28);
+            weapon1Combobox.TabIndex = 0;
             // 
             // startButton
             // 
-            this.startButton.AutoEllipsis = true;
-            this.startButton.BackColor = System.Drawing.Color.Gray;
-            this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startButton.Font = new System.Drawing.Font("IM FELL DW Pica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.startButton.ForeColor = System.Drawing.Color.Transparent;
-            this.startButton.Location = new System.Drawing.Point(120, 459);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(95, 29);
-            this.startButton.TabIndex = 1;
-            this.startButton.Text = "Start";
-            this.startButton.UseVisualStyleBackColor = false;
+            startButton.AutoEllipsis = true;
+            startButton.BackColor = Color.Gray;
+            startButton.FlatStyle = FlatStyle.Flat;
+            startButton.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            startButton.ForeColor = Color.Transparent;
+            startButton.Location = new Point(137, 612);
+            startButton.Margin = new Padding(3, 4, 3, 4);
+            startButton.Name = "startButton";
+            startButton.Size = new Size(109, 39);
+            startButton.TabIndex = 1;
+            startButton.Text = "Start";
+            startButton.UseVisualStyleBackColor = false;
+            startButton.Click += startButton_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("IM FELL DW Pica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label1.Location = new System.Drawing.Point(46, 348);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 23);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Weapon I";
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.AppWorkspace;
+            label1.Location = new Point(53, 464);
+            label1.Name = "label1";
+            label1.Size = new Size(115, 29);
+            label1.TabIndex = 2;
+            label1.Text = "Weapon I";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(224, 354);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 15);
-            this.label2.TabIndex = 3;
+            label2.AutoSize = true;
+            label2.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(256, 472);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 18);
+            label2.TabIndex = 3;
             // 
             // CloseButton
             // 
-            this.CloseButton.BackColor = System.Drawing.Color.Transparent;
-            this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseButton.Font = new System.Drawing.Font("IM FELL DW Pica", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CloseButton.ForeColor = System.Drawing.Color.LightGray;
-            this.CloseButton.Location = new System.Drawing.Point(306, 3);
-            this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(31, 31);
-            this.CloseButton.TabIndex = 4;
-            this.CloseButton.Text = "X";
-            this.CloseButton.UseVisualStyleBackColor = false;
-            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
+            CloseButton.BackColor = Color.Transparent;
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            CloseButton.ForeColor = Color.LightGray;
+            CloseButton.Location = new Point(350, 4);
+            CloseButton.Margin = new Padding(3, 4, 3, 4);
+            CloseButton.Name = "CloseButton";
+            CloseButton.Size = new Size(35, 41);
+            CloseButton.TabIndex = 4;
+            CloseButton.Text = "X";
+            CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("IM FELL DW Pica", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label3.Location = new System.Drawing.Point(12, 419);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 19);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Save at:";
+            label3.AutoSize = true;
+            label3.BackColor = Color.Transparent;
+            label3.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.AppWorkspace;
+            label3.Location = new Point(14, 559);
+            label3.Name = "label3";
+            label3.Size = new Size(76, 24);
+            label3.TabIndex = 5;
+            label3.Text = "Save at:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label4.Location = new System.Drawing.Point(12, 438);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 18);
-            this.label4.TabIndex = 6;
+            label4.AutoSize = true;
+            label4.BackColor = Color.Transparent;
+            label4.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.AppWorkspace;
+            label4.Location = new Point(14, 584);
+            label4.Name = "label4";
+            label4.Size = new Size(0, 24);
+            label4.TabIndex = 6;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("IM FELL DW Pica", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label5.Location = new System.Drawing.Point(201, 348);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 23);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Weapon II";
+            label5.AutoSize = true;
+            label5.BackColor = Color.Transparent;
+            label5.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.ForeColor = SystemColors.AppWorkspace;
+            label5.Location = new Point(230, 464);
+            label5.Name = "label5";
+            label5.Size = new Size(121, 29);
+            label5.TabIndex = 7;
+            label5.Text = "Weapon II";
             // 
             // weapon2Combobox
             // 
-            this.weapon2Combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.weapon2Combobox.FormattingEnabled = true;
-            this.weapon2Combobox.Location = new System.Drawing.Point(188, 375);
-            this.weapon2Combobox.Name = "weapon2Combobox";
-            this.weapon2Combobox.Size = new System.Drawing.Size(121, 23);
-            this.weapon2Combobox.TabIndex = 8;
+            weapon2Combobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            weapon2Combobox.FormattingEnabled = true;
+            weapon2Combobox.Location = new Point(215, 500);
+            weapon2Combobox.Margin = new Padding(3, 4, 3, 4);
+            weapon2Combobox.Name = "weapon2Combobox";
+            weapon2Combobox.Size = new Size(138, 28);
+            weapon2Combobox.TabIndex = 8;
             // 
             // linkLabel1
             // 
-            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Font = new System.Drawing.Font("IM FELL DW Pica", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.linkLabel1.LinkColor = System.Drawing.SystemColors.ActiveBorder;
-            this.linkLabel1.Location = new System.Drawing.Point(14, 441);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(18, 15);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "C:";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            linkLabel1.ActiveLinkColor = Color.DimGray;
+            linkLabel1.AutoSize = true;
+            linkLabel1.BackColor = Color.Transparent;
+            linkLabel1.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            linkLabel1.LinkColor = SystemColors.ActiveBorder;
+            linkLabel1.Location = new Point(16, 588);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(23, 18);
+            linkLabel1.TabIndex = 9;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "C:";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // ouputFolderBrowser
             // 
-            this.ouputFolderBrowser.SelectedPath = "c:/";
+            ouputFolderBrowser.SelectedPath = "c:/";
             // 
             // NWBE
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Screencap.Properties.Resources.NWBE;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(340, 500);
-            this.ControlBox = false;
-            this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.weapon2Combobox);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.CloseButton);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.startButton);
-            this.Controls.Add(this.weapon1Combobox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "NWBE";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NWBE";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.NWBE;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(389, 667);
+            ControlBox = false;
+            Controls.Add(linkLabel1);
+            Controls.Add(weapon2Combobox);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(CloseButton);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(startButton);
+            Controls.Add(weapon1Combobox);
+            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "NWBE";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "NWBE";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

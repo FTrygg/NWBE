@@ -212,10 +212,39 @@ namespace Screencap
                 Rectangle subsection = new Rectangle(453, 231, 1120, 575);
                 Bitmap tmpBitmap = Cap(hwnd, subsection);
                 g.DrawImage(tmpBitmap, 0, 0, subsection.Size.Width, subsection.Size.Height);
-                ImageSave("Attributes", ImageFormat.Png, attributeOverview); 
+                ImageSave("Attributes", ImageFormat.Png, attributeOverview);
             }
             Thread.Sleep(delay);
         }
+
+
+        private void weapon1Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComboboxes(weapon1Combobox);
+        }
+
+        private void weapon2Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComboboxes(weapon2Combobox);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+            DialogResult result = this.ouputFolderBrowser.ShowDialog();
+
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(this.ouputFolderBrowser.SelectedPath))
+            {
+                Debug.WriteLine(this.ouputFolderBrowser.SelectedPath);
+                linkLabel1.Text = this.ouputFolderBrowser.SelectedPath;
+            }
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void startButton_Click(object sender, EventArgs e)
         {
             if (weapon1Combobox.SelectedItem != null && weapon2Combobox.SelectedItem != null)
@@ -233,39 +262,12 @@ namespace Screencap
                     SendKeys.SendWait("{ESC}");
                     MessageBox.Show("Build has been exported!");
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("Please select both weapons");
             }
-        }
-
-        private void weapon1Combobox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateComboboxes(weapon1Combobox);
-        }
-
-        private void weapon2Combobox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateComboboxes(weapon2Combobox);
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            
-            DialogResult result = this.ouputFolderBrowser.ShowDialog();
-
-            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(this.ouputFolderBrowser.SelectedPath))
-            {
-                Debug.WriteLine(this.ouputFolderBrowser.SelectedPath);
-                linkLabel1.Text = this.ouputFolderBrowser.SelectedPath;
-            }
-        }
-
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
     }
 }
