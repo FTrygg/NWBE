@@ -11,6 +11,10 @@ namespace Screencap
     {
         public void SetupUI()
         {
+            ouputFolderBrowser.SelectedPath = AppContext.BaseDirectory;
+            this.linkLabel1.Text = this.ouputFolderBrowser.SelectedPath;
+
+
             this.weapon1Combobox.Items.Clear();
             this.weapon2Combobox.Items.Clear();
 

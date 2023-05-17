@@ -109,8 +109,8 @@ namespace Screencap
                     g.DrawImage(tmpBitmap, item.outputArea.X, item.outputArea.Y, tmpBitmap.Size.Width, tmpBitmap.Size.Height);
                     Thread.Sleep(delay / 2);
                 }
-                //Bitmap overlay = new Bitmap("");// open from resources
-                //g.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
+                Bitmap overlay = new Bitmap(Properties.Resources.ClearOverlay);// open from resources
+                g.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
                 ImageSave("Gearoverview", ImageFormat.Png, equipmentOverview);
             }
         }
@@ -128,22 +128,10 @@ namespace Screencap
             return result;
         }
 
-        public Bitmap CapFull(IntPtr handle)
-        {
-            Rectangle bounds;
-            var _rect = new Rect();
-            GetWindowRect(handle, ref _rect);
-            bounds = new Rectangle(_rect.Left, _rect.Top, _rect.Right - _rect.Left, _rect.Bottom - _rect.Top);
-            var result = new Bitmap(bounds.Width, bounds.Height);
-            using (var g = Graphics.FromImage(result))
-                g.CopyFromScreen(new Point(_rect.Left, _rect.Top), Point.Empty, bounds.Size);
-            return result;
-        }
-
-        static void ImageSave(string filename, ImageFormat format, Image image)
+        private void ImageSave(string filename, ImageFormat format, Image image)
         {
             format = format ?? ImageFormat.Png;
-            filename = @"C:\Users\Finn\Desktop\" + filename + ".png";
+            filename = Path.Join(this.ouputFolderBrowser.SelectedPath, $"{filename}.png");
             image.Save(filename, format);
         }
         private void CreateSkilltreeOverview(IntPtr hwnd, int delay = 700)
@@ -263,9 +251,21 @@ namespace Screencap
             UpdateComboboxes(weapon2Combobox);
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            
+            DialogResult result = this.ouputFolderBrowser.ShowDialog();
+
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(this.ouputFolderBrowser.SelectedPath))
+            {
+                Debug.WriteLine(this.ouputFolderBrowser.SelectedPath);
+                linkLabel1.Text = this.ouputFolderBrowser.SelectedPath;
+            }
+        }
+
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
     }
 }
