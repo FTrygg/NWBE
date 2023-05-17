@@ -6,6 +6,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection.Metadata;
+using System.Collections.Generic;
+using static Screencap.NWBE;
 
 namespace Screencap
 {
@@ -55,34 +57,26 @@ namespace Screencap
             InitializeEquipmentslots();
             InitializeWeapons();
             InitializeComponent();
-            InitializeOutputPictures();
-            SwitchApp(apps.Newworld);
+            SetupUI();
         }
-        
-        private void SwitchApp(apps app)
+
+        private IntPtr SwitchApp(apps app)
         {
-            string appname = (app == apps.Newworld) ? "NewWorld" : "NWGE.exe";
+            string appname = (app == apps.Newworld) ? "NewWorld" : "NWBE.exe";
 
             Process[] processes = Process.GetProcessesByName(appname);
-            if (processes.Length == 1 )
+            if (processes.Length == 1)
             {
                 Debug.WriteLine("Found process");
                 IntPtr hwnd = processes[0].MainWindowHandle;
                 ShowWindowAsync(hwnd, SW_RESTORE);
                 SetForegroundWindow(hwnd);
                 Debug.WriteLine($"Set process to {appname}");
-                if (app == apps.Newworld)
-                {
-                    createGearsetOverview(hwnd);
-                }
+                return (hwnd);
             }
+            return (IntPtr.Zero);
         }
-        private void InitializeOutputPictures()
-        {
-            equipmentOverview = new Bitmap(2750, 1700);
-            
-        }
-        private void createGearsetOverview(IntPtr hwnd, int delay = 700)
+        private void CreateGearsetOverview(IntPtr hwnd, int delay = 700)
         {
             //close other windows if open
             SendKeys.SendWait("{ESC}");
@@ -106,7 +100,7 @@ namespace Screencap
             equipmentOverview = new Bitmap(2750, 1700);
             using (Graphics g = Graphics.FromImage(equipmentOverview))
             {
-                
+
                 foreach (Equipment item in equipmentSlots)
                 {
                     Cursor.Position = item.inventoryCoordinates;
@@ -115,14 +109,10 @@ namespace Screencap
                     g.DrawImage(tmpBitmap, item.outputArea.X, item.outputArea.Y, tmpBitmap.Size.Width, tmpBitmap.Size.Height);
                     Thread.Sleep(delay / 2);
                 }
-                
-                Bitmap overlay = new Bitmap("");// open from resources
-                g.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
-                ImageSave("output1", ImageFormat.Png, equipmentOverview);
+                //Bitmap overlay = new Bitmap("");// open from resources
+                //g.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
+                ImageSave("Gearoverview", ImageFormat.Png, equipmentOverview);
             }
-            
-
-
         }
         public void Mouseclick()
         {
@@ -156,6 +146,126 @@ namespace Screencap
             filename = @"C:\Users\Finn\Desktop\" + filename + ".png";
             image.Save(filename, format);
         }
-        
+        private void CreateSkilltreeOverview(IntPtr hwnd, int delay = 700)
+        {
+            List<string> selectedWeapons = new List<string>();
+            selectedWeapons.Add(weapon1Combobox.GetItemText(weapon1Combobox.SelectedItem));
+            selectedWeapons.Add(weapon2Combobox.GetItemText(weapon2Combobox.SelectedItem));
+
+            foreach (string weapon in selectedWeapons)
+            {
+                //close other windows if open
+                SendKeys.SendWait("{ESC}");
+                Thread.Sleep(delay);
+                //open inventory
+                SendKeys.SendWait("{K}");
+                Thread.Sleep(delay);
+
+                Rectangle bounds;
+                var rect = new Rect();
+                GetWindowRect(hwnd, ref rect);
+                bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+                Cursor = new Cursor(hwnd);
+
+                //move to weaponmastery coordinates position and click 
+                Cursor.Position = weaponMasteryCoordinates;
+                Cursor.Clip = bounds;
+                Thread.Sleep(delay);
+                Mouseclick();
+                Thread.Sleep(delay);
+
+
+                Weapon w = weapons.Where(i => i.name == weapon).FirstOrDefault();
+                Cursor.Position = w.masteryCoordinates;
+                Cursor.Clip = bounds;
+                Thread.Sleep(delay);
+                Mouseclick();
+                Thread.Sleep(delay);
+                Cursor.Position = new Point(5, 5);
+                Cursor.Clip = bounds;
+                Thread.Sleep(delay);
+
+                Bitmap skilltreeOverview = new Bitmap(1550, 740);
+                using (Graphics g = Graphics.FromImage(skilltreeOverview))
+                {
+                    Rectangle subsection = new Rectangle(224, 222, 1550, 740);
+                    Bitmap tmpBitmap = Cap(hwnd, subsection);
+                    g.DrawImage(tmpBitmap, 0, 0, subsection.Size.Width, subsection.Size.Height);
+                    ImageSave($"{weapon}_Skilltree", ImageFormat.Png, skilltreeOverview);
+                    Thread.Sleep(delay);
+                }
+            }
+        }
+        private void CreateAttributeOverview(IntPtr hwnd, int delay = 700)
+        {
+            //close other windows if open
+            SendKeys.SendWait("{ESC}");
+            Thread.Sleep(delay);
+            //open inventory
+            SendKeys.SendWait("{K}");
+            Thread.Sleep(delay);
+
+            Rectangle bounds;
+            var rect = new Rect();
+            GetWindowRect(hwnd, ref rect);
+            bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+            Cursor = new Cursor(hwnd);
+
+            //move to gearset button position and close 
+            Cursor.Position = attributeCoordinates;
+            Cursor.Clip = bounds;
+            Thread.Sleep(delay);
+            Mouseclick();
+            Thread.Sleep(delay);
+
+            Bitmap attributeOverview = new Bitmap(1120, 575);
+            using (Graphics g = Graphics.FromImage(attributeOverview))
+            {
+                Rectangle subsection = new Rectangle(453, 231, 1120, 575);
+                Bitmap tmpBitmap = Cap(hwnd, subsection);
+                g.DrawImage(tmpBitmap, 0, 0, subsection.Size.Width, subsection.Size.Height);
+                ImageSave("Attributes", ImageFormat.Png, attributeOverview); 
+            }
+            Thread.Sleep(delay);
+        }
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            if (weapon1Combobox.SelectedItem != null && weapon2Combobox.SelectedItem != null)
+            {
+                IntPtr i = SwitchApp(apps.Newworld);
+                if (i == IntPtr.Zero)
+                {
+                    MessageBox.Show("New world is not running");
+                }
+                else
+                {
+                    CreateGearsetOverview(i);
+                    CreateAttributeOverview(i);
+                    CreateSkilltreeOverview(i);
+                    SendKeys.SendWait("{ESC}");
+                    MessageBox.Show("Build has been exported!");
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Please select both weapons");
+            }
+        }
+
+        private void weapon1Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComboboxes(weapon1Combobox);
+        }
+
+        private void weapon2Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateComboboxes(weapon2Combobox);
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

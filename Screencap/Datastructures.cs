@@ -8,9 +8,11 @@ namespace Screencap
 {
     public partial class NWBE : Form
     {
-        private Weapon[] selectedWeapons = new Weapon[2];
         private List<Weapon> weapons = new List<Weapon>();
         private List<Equipment> equipmentSlots = new List<Equipment>();
+        private static Point attributeCoordinates = new Point(564, 166);
+        private static Point weaponMasteryCoordinates = new Point(850, 166);
+
 
         public class Weapon
         {
@@ -41,18 +43,20 @@ namespace Screencap
 
         private void InitializeWeapons()
         {
-            weapons.Add(new Weapon("Hatchet", new Point(0, 0)));
-            weapons.Add(new Weapon("Hammer", new Point(0, 0)));
-            weapons.Add(new Weapon("Bow", new Point(0, 0)));
-            weapons.Add(new Weapon("Life staff", new Point(0, 0)));
-            weapons.Add(new Weapon("Void gauntlet", new Point(0, 0)));
-            weapons.Add(new Weapon("Musket", new Point(0, 0)));
-            weapons.Add(new Weapon("Great sword", new Point(0, 0)));
-            weapons.Add(new Weapon("Great Axe", new Point(0, 0)));
-            weapons.Add(new Weapon("Ice gauntlet", new Point(0, 0)));
-            weapons.Add(new Weapon("Spear", new Point(0, 0)));
-            weapons.Add(new Weapon("Blunderbuss", new Point(0, 0)));
-            weapons.Add(new Weapon("Firestaff", new Point(0, 0)));
+            weapons.Add(new Weapon("Hatchet", new Point(333, 660)));
+            weapons.Add(new Weapon("Hammer", new Point(768, 660)));
+            weapons.Add(new Weapon("Bow", new Point(1205, 377)));
+            weapons.Add(new Weapon("Life staff", new Point(1650, 528)));
+            weapons.Add(new Weapon("Void gauntlet", new Point(1650, 783)));
+            weapons.Add(new Weapon("Musket", new Point(1205, 528)));
+            weapons.Add(new Weapon("Great sword", new Point(768, 783)));
+            weapons.Add(new Weapon("Great Axe", new Point(768, 528)));
+            weapons.Add(new Weapon("Ice gauntlet", new Point(1650, 660)));
+            weapons.Add(new Weapon("Spear", new Point(768, 377)));
+            weapons.Add(new Weapon("Blunderbuss", new Point(1205, 660)));
+            weapons.Add(new Weapon("Firestaff", new Point(1650, 377)));
+            weapons.Add(new Weapon("Sword Shield", new Point(333, 377)));
+            weapons.Add(new Weapon("Rapier", new Point(333, 528)));
         }
         private void InitializeEquipmentslots()
         {
@@ -103,5 +107,6 @@ namespace Screencap
                 new Rectangle(592, 1079 - Equipment.pictureAreaDimensions.Y, Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y),
                 new Rectangle(1846,980, Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y)));
         }
+
     }
 }
