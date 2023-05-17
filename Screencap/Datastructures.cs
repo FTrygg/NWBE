@@ -13,7 +13,6 @@ namespace Screencap
         private static Point attributeCoordinates = new Point(564, 166);
         private static Point weaponMasteryCoordinates = new Point(850, 166);
 
-
         public class Weapon
         {
             //static 
