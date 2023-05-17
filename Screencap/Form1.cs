@@ -51,6 +51,8 @@ namespace Screencap
 
         public NWBE()
         {
+            InitializeEquipmentslots();
+            InitializeWeapons();
             InitializeComponent();
             SwitchApp(apps.Newworld);
         }
@@ -67,59 +69,71 @@ namespace Screencap
                 ShowWindowAsync(hwnd, SW_RESTORE);
                 SetForegroundWindow(hwnd);
                 Debug.WriteLine($"Set process to {appname}");
-
-
-                SendKeys.SendWait("{ESC}");
-                Thread.Sleep(700);
-                SendKeys.SendWait("{TAB}");
-                Thread.Sleep(500);
-
-                Rectangle bounds;
-                var rect = new Rect();
-                GetWindowRect(hwnd, ref rect);
-                bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-                
-                Cursor = new Cursor(hwnd);
-                Cursor.Position = new Point(360,996);
-                Cursor.Clip = bounds;
-                
-                Thread.Sleep(500);
-
-                uint X = (uint)Cursor.Position.X;
-                uint Y = (uint)Cursor.Position.Y;
-                mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
-
-                Cursor.Position = new Point(360, 996);
-                Thread.Sleep(500);
-                ImageSave("",ImageFormat.Png,Cap(hwnd));
-
+                if (app == apps.Newworld)
+                {
+                    createGearsetOverview(hwnd);
+                }
             }
         }
-        private void createGearsetOverview(IntPtr hwnd)
+        private void createGearsetOverview(IntPtr hwnd, int delay = 700)
         {
-            
-            //Cursor.Clip = new Rectangle(this.Location, this.Size);
-        }
+            //close other windows if open
+            SendKeys.SendWait("{ESC}");
+            Thread.Sleep(delay);
+            //open inventory
+            SendKeys.SendWait("{TAB}");
+            Thread.Sleep(delay);
 
-        public Bitmap Cap(IntPtr handle)
-        {
             Rectangle bounds;
             var rect = new Rect();
-            GetWindowRect(handle, ref rect);
+            GetWindowRect(hwnd, ref rect);
             bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            //CursorPosition = new Point(Cursor.Position.X - rect.Left, Cursor.Position.Y - rect.Top);
+            Cursor = new Cursor(hwnd);
 
-            var result = new Bitmap(bounds.Width, bounds.Height);
+            //move to gearset button position and close 
+            Cursor.Position = new Point(360, 996);
+            Cursor.Clip = bounds;
+            Thread.Sleep(delay);
+            Mouseclick();
+
+            foreach (Equipment item in equipmentSlots)
+            {
+                Cursor.Position = item.inventoryCoordinates;
+                Thread.Sleep(delay/2);
+                ImageSave(item.name, ImageFormat.Png, Cap(hwnd, item.pictureArea));
+                Thread.Sleep(delay / 2);
+            }
+        }
+        public void Mouseclick()
+        {
+            uint X = (uint)Cursor.Position.X;
+            uint Y = (uint)Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
+        }
+        public Bitmap Cap(IntPtr handle, Rectangle rect)
+        {
+            var result = new Bitmap(rect.Width, rect.Height);
             using (var g = Graphics.FromImage(result))
-                g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-
+                g.CopyFromScreen(new Point(rect.Left, rect.Top), Point.Empty, rect.Size);
             return result;
         }
-        
+
+        public Bitmap CapFull(IntPtr handle)
+        {
+            Rectangle bounds;
+            var _rect = new Rect();
+            GetWindowRect(handle, ref _rect);
+            bounds = new Rectangle(_rect.Left, _rect.Top, _rect.Right - _rect.Left, _rect.Bottom - _rect.Top);
+            var result = new Bitmap(bounds.Width, bounds.Height);
+            using (var g = Graphics.FromImage(result))
+                g.CopyFromScreen(new Point(_rect.Left, _rect.Top), Point.Empty, bounds.Size);
+            return result;
+        }
+
         static void ImageSave(string filename, ImageFormat format, Image image)
         {
             format = format ?? ImageFormat.Png;
-            filename = @"C:\Users\Finn\Desktop\testpic.png";
+            filename = @"C:\Users\Finn\Desktop\" + filename + ".png";
             image.Save(filename, format);
         }
 
