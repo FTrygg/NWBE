@@ -103,13 +103,26 @@ namespace Screencap
             Thread.Sleep(delay);
             Mouseclick();
 
-            foreach (Equipment item in equipmentSlots)
+            equipmentOverview = new Bitmap(2750, 1700);
+            using (Graphics g = Graphics.FromImage(equipmentOverview))
             {
-                Cursor.Position = item.inventoryCoordinates;
-                Thread.Sleep(delay/2);
-                ImageSave(item.name, ImageFormat.Png, Cap(hwnd, item.pictureArea));
-                Thread.Sleep(delay / 2);
+                
+                foreach (Equipment item in equipmentSlots)
+                {
+                    Cursor.Position = item.inventoryCoordinates;
+                    Thread.Sleep(delay);
+                    Bitmap tmpBitmap = Cap(hwnd, item.pictureArea);
+                    g.DrawImage(tmpBitmap, item.outputArea.X, item.outputArea.Y, tmpBitmap.Size.Width, tmpBitmap.Size.Height);
+                    Thread.Sleep(delay / 2);
+                }
+                
+                Bitmap overlay = new Bitmap("");// open from resources
+                g.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
+                ImageSave("output1", ImageFormat.Png, equipmentOverview);
             }
+            
+
+
         }
         public void Mouseclick()
         {
@@ -142,14 +155,6 @@ namespace Screencap
             format = format ?? ImageFormat.Png;
             filename = @"C:\Users\Finn\Desktop\" + filename + ".png";
             image.Save(filename, format);
-        }
-
-        public void AddItemToPicture()
-        {
-            Graphics g = Graphics.FromImage((Image)gbkn);
-            Image img = Image.FromFile("C:\\background.png");
-            g.DrawImage(img, new Point(0, 0));
-            img.Dipose();
         }
         
     }

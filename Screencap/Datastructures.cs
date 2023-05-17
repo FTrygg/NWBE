@@ -66,7 +66,7 @@ namespace Screencap
                 new Rectangle(544, 980,Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y)));
             equipmentSlots.Add(new Equipment("Rune",
                 new Point(860, 260),
-                new Rectangle(1088, 260, Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y),
+                new Rectangle(1088, 260, Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y+300),
                 new Rectangle(2280,175,Equipment.pictureAreaDimensions.X, Equipment.pictureAreaDimensions.Y)));
 
             equipmentSlots.Add(new Equipment("Helmet",
